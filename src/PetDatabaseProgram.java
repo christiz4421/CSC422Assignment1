@@ -4,11 +4,13 @@
  * <p>
  * Author: Zach Christianson
  * Date: January 17, 2026
+ * Revised: January 18, 2026
  * Class: CSC 422
  * File Name: CSC 422 Assignment 1 Part 2 / PetDatabaseProgram.java
  * Assignment: CSC 422 Assignment 1 Part 2
- * Description: This program creates a pet database and lets the user add pets and view all pets
- * in a formatted table. It is Release 1 of the Pet Database Program.
+ * Description: This program creates a pet database and lets the user add pets,
+ * view all pets in a formatted table, and search for pets by name or age. It is
+ * Release 2 of the Pet Database Program.
  * </p>
  */
 
@@ -31,7 +33,7 @@ public class PetDatabaseProgram {
         System.out.println("Pet Database Program.");
 
         // Loop until the user chooses to exit
-        while (choice != 3) {
+        while (choice != 5) {
             printMenu();
             choice = scanner.nextInt();
             scanner.nextLine();
@@ -41,9 +43,13 @@ public class PetDatabaseProgram {
             } else if (choice == 2) {
                 addPets(scanner);
             } else if (choice == 3) {
+                searchByName(scanner);
+            } else if (choice == 4) {
+                searchByAge(scanner);
+            } else if (choice == 5) {
                 System.out.println("Goodbye!");
             } else {
-                System.out.println("Please enter 1, 2, or 3");
+                System.out.println("Please enter 1, 2, 3, 4, or 5");
             }
         }
     }
@@ -55,7 +61,9 @@ public class PetDatabaseProgram {
         System.out.println("\nWhat would you like to do?");
         System.out.println("1) View all pets");
         System.out.println("2) Add pets (or type 'done' to stop adding pets)");
-        System.out.println("3) Exit program");
+        System.out.println("3) Search for pets by name");
+        System.out.println("4) Search for pets by age");
+        System.out.println("5) Exit program");
         System.out.print("Your choice: ");
     }
 
@@ -100,10 +108,65 @@ public class PetDatabaseProgram {
         // Print each pet with its index as its ID number
         for (int i = 0; i < pets.size(); i++) {
             Pet pet = pets.get(i);
-            System.out.printf("| %-3d | %-10s | %-4d |\n", i, pet.getName(), pet.getAge());
+            System.out.printf("| %-3d | %-15s | %-3d |\n", i, pet.getName(), pet.getAge());
         }
 
         printTableFooter(pets.size());
+    }
+
+    /**
+     * Searches for pets by name and displays all that match.
+     *
+     * @param scanner the Scanner used for reading user input
+     */
+    private static void searchByName(Scanner scanner) {
+        System.out.print("Enter a name to search: ");
+        String name = scanner.nextLine();
+
+        printTableHeader();
+
+        int match = 0;
+
+        // Check each pet to see if the entered name matches
+        for (int i = 0; i < pets.size(); i++) {
+            Pet pet = pets.get(i);
+
+            // Print any matching names
+            if (pet.getName().equalsIgnoreCase(name)) {
+                System.out.printf("| %-3d | %-15s | %-3d |\n", i, pet.getName(), pet.getAge());
+                match++;
+            }
+        }
+
+        printTableFooter(match);
+    }
+
+    /**
+     * Searches for pets by age and displays all that match.
+     *
+     * @param scanner the Scanner used for reading user input
+     */
+    private static void searchByAge(Scanner scanner) {
+        System.out.print("Enter an age to search: ");
+        int age = scanner.nextInt();
+        scanner.nextLine();
+
+        printTableHeader();
+
+        int match = 0;
+
+        // Check each pet to see if the entered age matches
+        for (int i = 0; i < pets.size(); i++) {
+            Pet pet = pets.get(i);
+
+            // Print any matching names
+            if (pet.getAge() == age) {
+                System.out.printf("| %-3d | %-15s | %-3d |\n", i, pet.getName(), pet.getAge());
+                match++;
+            }
+        }
+
+        printTableFooter(match);
     }
 
     /**
@@ -111,7 +174,7 @@ public class PetDatabaseProgram {
      */
     private static void printTableHeader() {
         System.out.println("+-----------------------------+");
-        System.out.println("| ID  | NAME       | AGE |");
+        System.out.println("| ID  | NAME            | AGE |");
         System.out.println("+-----------------------------+");
     }
 
@@ -125,3 +188,4 @@ public class PetDatabaseProgram {
         System.out.println(rows + " rows in set.");
     }
 }
+
