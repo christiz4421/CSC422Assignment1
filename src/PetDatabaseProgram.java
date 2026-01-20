@@ -9,8 +9,8 @@
  * File Name: CSC 422 Assignment 1 Part 2 / PetDatabaseProgram.java
  * Assignment: CSC 422 Assignment 1 Part 2
  * Description: This program creates a pet database and lets the user add pets,
- * view all pets in a formatted table, and search for pets by name or age. It is
- * Release 2 of the Pet Database Program.
+ * view all pets in a formatted table, search for pets by name or age, update pet
+ * information, and remove pets. It is Release 3 of the Pet Database Program.
  * </p>
  */
 
@@ -33,7 +33,7 @@ public class PetDatabaseProgram {
         System.out.println("Pet Database Program.");
 
         // Loop until the user chooses to exit
-        while (choice != 5) {
+        while (choice != 7) {
             printMenu();
             choice = scanner.nextInt();
             scanner.nextLine();
@@ -47,9 +47,13 @@ public class PetDatabaseProgram {
             } else if (choice == 4) {
                 searchByAge(scanner);
             } else if (choice == 5) {
+                updatePet(scanner);
+            } else if (choice == 6) {
+                removePet(scanner);
+            } else if (choice == 7) {
                 System.out.println("Goodbye!");
             } else {
-                System.out.println("Please enter 1, 2, 3, 4, or 5");
+                System.out.println("Please enter a number from 1 to 7.");
             }
         }
     }
@@ -63,7 +67,9 @@ public class PetDatabaseProgram {
         System.out.println("2) Add pets (or type 'done' to stop adding pets)");
         System.out.println("3) Search for pets by name");
         System.out.println("4) Search for pets by age");
-        System.out.println("5) Exit program");
+        System.out.println("5) Update a pet");
+        System.out.println("6) Remove a pet");
+        System.out.println("7) Exit program");
         System.out.print("Your choice: ");
     }
 
@@ -170,6 +176,78 @@ public class PetDatabaseProgram {
     }
 
     /**
+     * Updates a pet's name and age based on its ID number.
+     *
+     * @param scanner the Scanner used for reading user input
+     */
+    private static void updatePet(Scanner scanner) {
+        showPets();
+
+        System.out.print("Enter the pet ID you want to update: ");
+        int id = scanner.nextInt();
+        scanner.nextLine();
+
+        // Check to ensure the ID is within the valid range
+        if (id < 0 || id >= pets.size()) {
+            System.out.println("That is not a valid pet ID. Please try again.");
+            return;
+        }
+
+        Pet pet = pets.get(id);
+
+        // Store old values for the update message
+        String oldName = pet.getName();
+        int oldAge = pet.getAge();
+
+        // Get new values
+        System.out.print("Enter new name and new age: ");
+        String input = scanner.nextLine();
+
+        // Split user input into name and age
+        String[] parts = input.split(" ");
+        String newName = parts[0];
+        int newAge = Integer.parseInt(parts[1]);
+
+        // Update the pet
+        pet.setName(newName);
+        pet.setAge(newAge);
+
+        // Print a message showing the old and new values
+        System.out.println(oldName + " " + oldAge + " changed to " + newName + " " + newAge + ".");
+    }
+
+
+    /**
+     * Removes a pet from the database based on its ID number.
+     *
+     * @param scanner the Scanner used for reading user input
+     */
+    private static void removePet(Scanner scanner) {
+        showPets();
+
+        System.out.print("Enter the ID of the pet to remove: ");
+        int id = scanner.nextInt();
+        scanner.nextLine();
+
+        // Check to ensure the ID is within the valid range
+        if (id < 0 || id >= pets.size()) {
+            System.out.println("That is not a valid pet ID. Please try again.");
+            return;
+        }
+
+        // Get the pet before removing it
+        Pet pet = pets.get(id);
+        String name = pet.getName();
+        int age = pet.getAge();
+
+        // Remove the pet
+        pets.remove(id);
+
+        // Print a message showing which pet was removed
+        System.out.println(name + " " + age + " is removed.");
+    }
+
+    /**
      * Prints the table header for the pet table.
      */
     private static void printTableHeader() {
@@ -188,4 +266,5 @@ public class PetDatabaseProgram {
         System.out.println(rows + " rows in set.");
     }
 }
+
 

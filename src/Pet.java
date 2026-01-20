@@ -3,11 +3,13 @@
  * Signed: Zach Christianson
  * <p>
  * Author: Zach Christianson
- * Date: January 19, 2026
+ * Date: January 17, 2026
+ * Revised: January 18, 2026
  * Class: CSC 422
  * File Name: CSC 422 Assignment 1 Part 2 / Pet.java
  * Assignment: CSC 422 Assignment 1 Part 2
- * Description: The Pet class stores basic information about a pet, including its name and age.
+ * Description: The Pet class stores basic information about a pet, including its name and age. It
+ *  has been revised to add functionality that allows users to update pet information.
  *
  * <p>
  */
@@ -44,6 +46,16 @@ public class Pet {
     }
 
     /**
+     * Updates the pet's name.
+     *
+     * @param name the new name for the pet
+     */
+    public void setName(String name) {
+        this.name = name;
+    }
+
+
+    /**
      * Returns the pet's age.
      *
      * @return the age of the pet
@@ -51,5 +63,16 @@ public class Pet {
     public int getAge() {
         return age;
     }
+
+    /**
+     * Updates the pet's age.
+     *
+     * @param age the new age for the pet
+     */
+    public void setAge(int age) {
+        this.age = age;
+    }
 }
+
+
 
