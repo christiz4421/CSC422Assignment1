@@ -180,9 +180,13 @@ public class PetDatabaseProgram {
             String name = parts[0];
             int age = Integer.parseInt(parts[1]);
 
-            // Add the new pet to the list
-            pets.add(new Pet(name, age));
-            count++;
+            // Validate age range
+            if (age < 1 || age > 20) {
+                System.out.println("Sorry, the pet's age must be between 1 and 20.");
+            } else {
+                pets.add(new Pet(name, age));
+                count++;
+            }
 
             // Prompt the user for the next pet
             System.out.print("add pet (name, age): ");
@@ -294,6 +298,12 @@ public class PetDatabaseProgram {
         String[] parts = input.split(" ");
         String newName = parts[0];
         int newAge = Integer.parseInt(parts[1]);
+
+        // Age range validation
+        if (newAge < 1 || newAge > 20) {
+            System.out.println("Sorry, the pet's age must be between 1 and 20.");
+            return;
+        }
 
         // Update the pet
         pet.setName(newName);
