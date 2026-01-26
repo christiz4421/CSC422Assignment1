@@ -177,16 +177,39 @@ public class PetDatabaseProgram {
 
             // Split user input into name and age
             String[] parts = input.split(" ");
-            String name = parts[0];
-            int age = Integer.parseInt(parts[1]);
 
-            // Validate age range
+            // Validate input format
+            if (parts.length != 2) {
+                System.out.println("Please enter a name and an age.");
+                System.out.print("add pet (name age): ");
+                input = scanner.nextLine();
+                continue;
+            }
+
+            String name = parts[0];
+            int age;
+
+            // Validate that the age is numeric
+            try {
+                age = Integer.parseInt(parts[1]);
+            } catch (NumberFormatException e) {
+                System.out.println("Sorry, the age must be a number.");
+                System.out.print("add pet (name age): ");
+                input = scanner.nextLine();
+                continue;
+            }
+
+            // Age‑range validation
             if (age < 1 || age > 20) {
                 System.out.println("Sorry, the pet's age must be between 1 and 20.");
-            } else {
-                pets.add(new Pet(name, age));
-                count++;
+                System.out.print("add pet (name age): ");
+                input = scanner.nextLine();
+                continue;
             }
+
+            // Add the pet
+            pets.add(new Pet(name, age));
+            count++;
 
             // Prompt the user for the next pet
             System.out.print("add pet (name, age): ");
@@ -296,8 +319,23 @@ public class PetDatabaseProgram {
 
         // Split user input into name and age
         String[] parts = input.split(" ");
+
+        // Validate input format (must be exactly 2 values)
+        if (parts.length != 2) {
+            System.out.println("Error: Please enter a name and an age.");
+            return;
+        }
+
         String newName = parts[0];
-        int newAge = Integer.parseInt(parts[1]);
+        int newAge;
+
+        // Validate that age is numeric
+        try {
+            newAge = Integer.parseInt(parts[1]);
+        } catch (NumberFormatException e) {
+            System.out.println("Error: Age must be a number.");
+            return;
+        }
 
         // Age range validation
         if (newAge < 1 || newAge > 20) {
