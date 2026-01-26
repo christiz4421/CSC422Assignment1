@@ -40,9 +40,24 @@ public class PetDatabaseProgram {
         // Loop until the user chooses to exit
         while (choice != 7) {
             printMenu();
+
+            // Validate that the input is numeric
+            if (!scanner.hasNextInt()) {
+                System.out.println("Please enter a number from 1 to 7.");
+                scanner.nextLine();
+                continue;
+            }
+
             choice = scanner.nextInt();
             scanner.nextLine();
 
+            // Validate that the choice is in range
+            if (choice < 1 || choice > 7) {
+                System.out.println("Please enter a number from 1 to 7.");
+                continue;
+            }
+
+            // Handle valid choices
             if (choice == 1) {
                 showPets();
             } else if (choice == 2) {
