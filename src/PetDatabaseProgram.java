@@ -16,6 +16,8 @@
 
 import java.util.ArrayList;
 import java.util.Scanner;
+import java.io.File;
+import java.io.FileNotFoundException;
 
 /**
  * Creates the class described above.
@@ -31,6 +33,9 @@ public class PetDatabaseProgram {
         int choice = 0;
 
         System.out.println("Pet Database Program.");
+
+        // Load pets from file at startup
+        loadPetsFromFile();
 
         // Loop until the user chooses to exit
         while (choice != 7) {
@@ -55,6 +60,57 @@ public class PetDatabaseProgram {
             } else {
                 System.out.println("Please enter a number from 1 to 7.");
             }
+        }
+    }
+
+    /**
+     * Loads pet data from the pets.txt file at program startup.
+     * Each line in the file must have the format of (name age).
+     * Invalid lines are ignored. If the file does not exist,
+     * the program starts with an empty pet list.
+     */
+    private static void loadPetsFromFile() {
+
+        File filename = new File("pets.txt");
+
+        try (Scanner scanner = new Scanner(filename)) {
+
+            // Read each line until the file ends or the list reaches 5 pets
+            while (scanner.hasNextLine() && pets.size() < 5) {
+
+                String line = scanner.nextLine().trim();
+
+                // Skip blank lines
+                if (line.isEmpty()) {
+                    continue;
+                }
+
+                // Split into two parts: name and age
+                String[] parts = line.split(" ");
+
+                // Skip lines that do not have exactly two values
+                if (parts.length != 2) {
+                    continue;
+                }
+
+                String name = parts[0];
+                String ageText = parts[1];
+
+                try {
+                    // Convert age to an integer
+                    int age = Integer.parseInt(ageText);
+
+                    // Only accept valid age range
+                    if (age >= 1 && age <= 20) {
+                        pets.add(new Pet(name, age));
+                    }
+                // Ignore lines where the age is not a valid number
+                } catch (NumberFormatException e) {
+
+                }
+            }
+        // File does not exist — start with an empty list
+        } catch (FileNotFoundException e) {
         }
     }
 
