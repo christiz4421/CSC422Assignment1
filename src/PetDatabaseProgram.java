@@ -56,6 +56,8 @@ public class PetDatabaseProgram {
             } else if (choice == 6) {
                 removePet(scanner);
             } else if (choice == 7) {
+                // Save pets to file before exiting
+                savePetsToFile();
                 System.out.println("Goodbye!");
             } else {
                 System.out.println("Please enter a number from 1 to 7.");
@@ -111,6 +113,29 @@ public class PetDatabaseProgram {
             }
         // File does not exist — start with an empty list
         } catch (FileNotFoundException e) {
+        }
+    }
+
+    /**
+     * Saves all pets in the database to the pets.txt file.
+     * Each pet is written on its own line with the format of (name age).
+     * This method is called when the user exits the program.
+     */
+    private static void savePetsToFile() {
+
+        try (java.io.PrintWriter writer = new java.io.PrintWriter("pets.txt")) {
+
+            // Write each pet to the file
+            for (Pet pet : pets) {
+                writer.println(pet.getName() + " " + pet.getAge());
+            }
+            // Confirm that the pets were saved successfully
+            System.out.println("The pet data was successfully saved to the file pets.txt.");
+
+
+        } catch (java.io.IOException e) {
+            // Notify the user if saving the file fails
+            System.out.println("Sorry, the pets were not able to be saved to the file.");
         }
     }
 
