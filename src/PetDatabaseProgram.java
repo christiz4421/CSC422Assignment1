@@ -298,6 +298,14 @@ public class PetDatabaseProgram {
         showPets();
 
         System.out.print("Enter the pet ID you want to update: ");
+
+        // Validate that the ID is numeric
+        if (!scanner.hasNextInt()) {
+            System.out.println("The pet ID must be a number.");
+            scanner.nextLine(); // clear invalid input
+            return;
+        }
+
         int id = scanner.nextInt();
         scanner.nextLine();
 
@@ -351,7 +359,6 @@ public class PetDatabaseProgram {
         System.out.println(oldName + " " + oldAge + " changed to " + newName + " " + newAge + ".");
     }
 
-
     /**
      * Removes a pet from the database based on its ID number.
      *
@@ -361,6 +368,14 @@ public class PetDatabaseProgram {
         showPets();
 
         System.out.print("Enter the ID of the pet to remove: ");
+
+        // Validate that the ID is numeric
+        if (!scanner.hasNextInt()) {
+            System.out.println("The pet ID must be a number.");
+            scanner.nextLine(); // clear invalid input
+            return;
+        }
+
         int id = scanner.nextInt();
         scanner.nextLine();
 
