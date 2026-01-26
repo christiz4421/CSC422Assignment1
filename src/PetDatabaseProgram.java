@@ -162,6 +162,12 @@ public class PetDatabaseProgram {
     private static void addPets(Scanner scanner) {
         int count = 0;
 
+        // Do not allow adding more than 5 pets
+        if (pets.size() >= 5) {
+            System.out.println("Sorry, the pet database already contains the maximum number of 5 pets.");
+            return;
+        }
+
         // Read the first line of user input
         System.out.print("add pet (name age): ");
         String input = scanner.nextLine();
